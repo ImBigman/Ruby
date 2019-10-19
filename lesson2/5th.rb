@@ -18,5 +18,5 @@ if year % 4 == 0 || year % 400 == 0
 elsif year % 100 == 0
   puts 'не високосный 28'
 end
-answer = years_days.take(month - 1).to_h.sum { |n, d| d } + day
+answer = years_days.take(month - 1).to_h.sum { |k, v| v } + day
 puts 'Прядковый номер даты рождения: ' "#{answer}"
