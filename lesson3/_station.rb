@@ -15,7 +15,7 @@ class Station < Route
 
   def receive_train(train)
     @station_pull << train
-    puts "#{@name} приняла #{train.number} "
+    puts "#{@name} приняла #{train.number}"
   end
 
   def station_pull_kind
