@@ -1,6 +1,6 @@
 class Route
-  attr_accessor :route_station, :first_station, :end_station
-  attr_reader :route
+  attr_accessor :route_station
+  attr_reader :route, :first_station, :end_station
   def initialize(first_station, end_station)
     @first_station = first_station
     @end_station = end_station

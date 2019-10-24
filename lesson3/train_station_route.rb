@@ -2,7 +2,7 @@ require './_route'
 require './_train'
 require './_station'
 
-r = Route.new('Станция №1', 'Станция №5')
+r = Route.new('Станция №1', 'Станция №6')
 puts ' '
 puts r.route_station_add('Станция №3')
 r.full_route
@@ -11,6 +11,9 @@ puts r.route_station_remove('Станция №3')
 r.full_route
 puts ' '
 puts r.route_station_add('Станция №2')
+r.full_route
+puts ' '
+puts r.route_station_add('Станция №4')
 r.full_route
 puts ' '
 a = Train.new('Поезд №12', 'Пассажирский', 0)
@@ -22,7 +25,7 @@ puts a.faster(60)
 puts a.stop
 puts a.carriages_add
 puts a.carriages_remove
-puts a.route_add(r)
+puts a.add_route(r)
 p 'Местонахождение поезда: ' + a.current_station
 puts ' '
 s = Station.new('Cтанция №2')
@@ -50,6 +53,6 @@ puts ' '
 s.send_train(b)
 s.on_station
 puts ' '
-a.forward_on_route
 p a
-
+a.forward_on_route
+a.inspect_route
