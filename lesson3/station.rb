@@ -24,7 +24,7 @@ class Station < Route
 
   def station_pull_kind
     station_pull_kind = []
-    @station_pull.each do |train, kind|
+    @station_pull.each do |train, k|
       station_pull_kind << { train.kind => train.number }
     end
     p station_pull_kind.inject{ |memo, el| memo.merge( el ) { |k, old_v, new_v| [old_v + ', ' + new_v] } }
