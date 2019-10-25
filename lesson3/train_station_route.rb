@@ -1,6 +1,6 @@
-require './_route'
-require './_train'
-require './_station'
+require './route'
+require './train'
+require './station'
 
 r = Route.new('Станция №1', 'Станция №6')
 puts ' '
@@ -19,7 +19,7 @@ puts ' '
 a = Train.new('Поезд №12', 'Пассажирский', 0)
 puts 'Прибыл ' + a.kind + ' - ' + a.number
 puts ' '
-p 'Местонахождение поезда: ' + a.current_station
+p a.current_station
 puts ' '
 puts a.faster(60)
 puts a.stop
@@ -40,18 +40,18 @@ puts ' '
 u.receive_train(a)
 p u.station_pull
 puts ' '
-b = Train.new('Поезд №10', 'Пассажирский', 2)
+b = Train.new('Поезд №10', 'Грузовой', 2)
 puts 'Прибыл ' + b.kind + ' - ' + b.number
 puts ' '
-p 'Местонахождение поезда: ' + b.current_station
+c = Train.new('Поезд №7', 'Пассажирский', 1)
+s.receive_train(c)
 puts ' '
 s.receive_train(b)
-p s.station_pull
 puts ' '
+s.station_pull
 s.station_pull_kind
 puts ' '
 s.send_train(b)
-s.on_station
 puts ' '
 p a
 a.forward_on_route
