@@ -6,16 +6,16 @@
 # Может отправлять поезда (по одному за раз, при этом, поезд удаляется из списка поездов, находящихся на станции).
 class Station < Route
   attr_reader :station_pull, :name
+
   def initialize(name)
     @name = name
     @station_pull = []
   end
 
   def send_train(train)
-    if @station_pull.include?(train)
-      @station_pull.delete(train)
-    elsif puts "Поезда с номером #{train.number} нет на : #{@name}"
-    end
+    return unless @station_pull.include?(train)
+
+    @station_pull.delete(train)
   end
 
   def receive_train(train)
@@ -24,10 +24,9 @@ class Station < Route
 
   def station_pull_kind
     station_pull_kind = []
-    @station_pull.each do |train, k|
+    @station_pull.each do |train, _|
       station_pull_kind << { train.kind => train.number }
     end
-    p station_pull_kind.inject{ |memo, el| memo.merge( el ) { |k, old_v, new_v| [old_v + ', ' + new_v] } }
-    p 'Всего: ' + station_pull.count.to_s
+    p station_pull_kind.inject { |memo, el| memo.merge(el) { |_, old_v, new_v| [old_v + ', ' + new_v] } }
   end
 end

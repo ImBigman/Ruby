@@ -10,70 +10,61 @@
 # Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
 class Train < Route
-  attr_accessor :current_speed, :carriages, :kind, :number, :route, :current_station
+  attr_reader :current_speed, :carriages, :kind, :number, :route, :current_station
+
   def initialize(number, kind, carriages)
     @number = number
     @kind = kind
     @carriages = carriages
     @current_speed = 0
-    @current_station
-    @route
   end
 
   def carriages_add
-    if @current_speed.zero?
-      @carriages += 1
-      puts "К #{@number.downcase} присоединился вагон, теперь у него их #{@carriages}."
-    elsif puts 'На скорости нельзя присоединять вагоны.'
-    end
+    return unless @current_speed.zero?
+
+    @carriages += 1
   end
 
   def carriages_remove
-    if @current_speed.zero? && @carriages.positive?
-      @carriages -= 1
-      puts "От #{@number.downcase} отсоединили вагон, теперь у него их #{@carriages}."
-    elsif puts 'На скорости нельзя отсоединять вагоны или вагонов больше не осталось.'
-    end
+    return unless @current_speed.zero? && @carriages.positive?
+
+    @carriages -= 1
   end
 
   def faster(speed)
     @current_speed += speed
-    puts "#{@kind} #{@number.downcase} разогнался до #{@current_speed}"
   end
 
   def stop
     @current_speed = 0
-    puts "#{@kind} #{@number.downcase} остановился"
   end
 
   def add_route(route)
     @route = route
-    @current_station = @route.stations.first
-    puts "Добавлен путевой лист:  #{route.stations}"
+    @current_station = @route.full_route.first
   end
 
   def inspect_route
-    if @current_station != @route.stations.last
-      next_station = @route.stations[@route.stations.index(@current_station) + 1]
-      puts 'Текущая станция: ' + @current_station
-      puts 'Следующая станция в пути: ' + next_station
+    if @current_station != @route.full_route.last
+      next_station = @route.full_route[@route.full_route.index(@current_station) + 1]
+      p @current_station
+      p next_station
     end
-    if @current_station == @route.stations.first
-      puts 'Предыдущей станции нет'
-    elsif  previous_station = @route.stations[@route.stations.index(@current_station) - 1]
-      puts 'Предыдущая станция: ' + previous_station
+    if @current_station == @route.full_route.first
+    elsif previous_station = @route.full_route[@route.full_route.index(@current_station) - 1]
+      p previous_station
     end
   end
 
   def back_on_route
-    return unless @current_station != @route.stations.first
+    return unless @current_station != @route.full_route.first
 
-    @current_station = @route.stations[@route.stations.index(@current_station) - 1]
+    @current_station = @route.full_route[@route.full_route.index(@current_station) - 1]
   end
 
   def forward_on_route
-    return unless @current_station <= @route.stations.last
+    return unless @current_station <= @route.full_route.last
 
-    @current_station = @route.stations[@route.stations.index(@current_station) + 1]
+    @current_station = @route.full_route[@route.full_route.index(@current_station) + 1]
   end
 end

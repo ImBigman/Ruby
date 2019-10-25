@@ -6,29 +6,25 @@
 # Может удалять промежуточную станцию из списка
 # Может выводить список всех станций по-порядку от начальной до конечной
 class Route
-  attr_accessor :route_station
-  attr_reader :stations, :first_station, :end_station
+  attr_reader :stations, :first_station, :end_station, :route_station
+
   def initialize(first_station, end_station)
     @first_station = first_station
     @end_station = end_station
-    @route_stations = []
-    @stations = []
+    @mid_stations = []
   end
 
   def route_station_add(station)
-    if @route_stations.include?(station) || @stations.include?(station)
-    else @route_stations << station
-    end
+    @mid_stations << station
   end
 
   def route_station_remove(station)
-    return unless @route_stations.include?(station)
+    return unless @mid_stations.include?(station)
 
-    @route_stations.delete(station)
+    @mid_stations.delete(station)
   end
 
   def full_route
-    @stations= [@first_station] + @route_stations + [@end_station]
-    p @stations
+    [@first_station] + @mid_stations + [@end_station]
   end
 end
