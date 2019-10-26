@@ -47,12 +47,12 @@ class Train < Route
   def inspect_route
     if @current_station != @route.full_route.last
       next_station = @route.full_route[@route.full_route.index(@current_station) + 1]
-      p @current_station
-      p next_station
+      @current_station
+      next_station
     end
     if @current_station == @route.full_route.first
     elsif previous_station = @route.full_route[@route.full_route.index(@current_station) - 1]
-      p previous_station
+      previous_station
     end
   end
 
