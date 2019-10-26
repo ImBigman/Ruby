@@ -55,4 +55,4 @@ s.send_train(b)
 puts ' '
 p a
 a.forward_on_route
-a.inspect_route
+a.next_station

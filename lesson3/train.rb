@@ -9,7 +9,7 @@
 # При назначении маршрута поезду, поезд автоматически помещается на первую станцию в маршруте.
 # Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
 # Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
-class Train < Route
+class Train
   attr_reader :current_speed, :carriages, :kind, :number, :route, :current_station
 
   def initialize(number, kind, carriages)
@@ -44,12 +44,14 @@ class Train < Route
     @current_station = @route.full_route.first
   end
 
-  def inspect_route
-    if @current_station != @route.full_route.last
-      next_station = @route.full_route[@route.full_route.index(@current_station) + 1]
-      @current_station
-      next_station
-    end
+  def next_station
+    return unless @current_station != @route.full_route.last
+
+    next_station = @route.full_route[@route.full_route.index(@current_station) + 1]
+    next_station
+  end
+
+  def previous_station
     if @current_station == @route.full_route.first
     elsif previous_station = @route.full_route[@route.full_route.index(@current_station) - 1]
       previous_station
@@ -68,3 +70,4 @@ class Train < Route
     @current_station = @route.full_route[@route.full_route.index(@current_station) + 1]
   end
 end
+
