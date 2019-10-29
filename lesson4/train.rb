@@ -65,7 +65,7 @@ class Train
 
   def previous_station
     if @current_station == @route.full_route.first
-    elsif previous_station = @route.full_route[@route.full_route.index(@current_station) - 1]
+    elsif previous_station == @route.full_route[@route.full_route.index(@current_station) - 1]
       previous_station
     end
   end
@@ -73,13 +73,17 @@ class Train
   def back_on_route
     return unless @current_station != @route.full_route.first
 
+    @current_station.send_train(self)
     @current_station = @route.full_route[@route.full_route.index(@current_station) - 1]
+    @current_station.receive_train(self)
   end
 
   def forward_on_route
-    return unless @current_station <= @route.full_route.last
+    return unless @current_station != @route.full_route.last
 
+    @current_station.send_train(self)
     @current_station = @route.full_route[@route.full_route.index(@current_station) + 1]
+    @current_station.receive_train(self)
   end
 end
 

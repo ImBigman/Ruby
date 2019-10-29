@@ -35,7 +35,7 @@ def create_train
   puts 'Введите название поезда: '
   number = gets.chomp
   puts "Выберите тип поезда: 1 'Грузовой' 2 'Пассажирский'"
-  kind = gets.chomp
+  kind = gets.chomp.to_i
   @t1 = if kind == 1
           CargoTrain.new(number)
         else
@@ -46,10 +46,13 @@ def create_train
 end
 
 def create_route
-  puts 'Введите первую станцию в маршруте: '
-  first_station = gets.chomp
-  puts 'Введите последнюю станцию в маршруте: '
-  end_station = gets.chomp
+  p @station_list
+  puts 'Выберите начальную станцию в маршруте: '
+  @first = gets.chomp.to_i
+  first_station = @station_list[@first - 1]
+  puts 'Выберите конечную станцию в маршруте: '
+  @end = gets.chomp.to_i
+  end_station = @station_list[@end - 1]
   @r1 = Route.new(first_station, end_station)
   puts "Вы создали маршрут #{@r1.full_route}"
   @route_list.push(@r1)
@@ -131,9 +134,30 @@ def unhook_carriage
 end
 
 def train_moving
+  puts 'Выберите поезд, который нужно переместить: '
+  p @train_list
+  @train_in_list = gets.chomp.to_i
+  a = @train_list[@train_in_list - 1]
+  a.faster(60)
+  p "Переместить: 1 - 'Вперед' 2 - 'Назад' "
+  @course = gets.chomp
+  case @course
+  when '1'
+    a.forward_on_route
+  else a.back_on_route
+  end
+  p "Текущая станция поезда на маршруте:  #{a.current_station.name}"
+  p "Весь маршрут:  #{a.route.full_route}"
 end
 
 def station_explorer
+  puts "Полный список станций:  #{@station_list}"
+  puts 'Выберите станцию, которую нужно просмотреть: '
+  @station_in_list = gets.chomp.to_i
+  a = @station_list[@station_in_list - 1]
+  puts "Вы выбрали станцию: #{a.name}"
+  p "Список поездов на станции: #{a.station_pull_kind}"
+  p "Всего поездов на станции: #{a.station_pull.count}"
 end
 
 def again
@@ -165,6 +189,7 @@ def your_choice
     when '2'
       adjust_route
       p @route_list
+    else p 'назад в меню'
     end
     again
   when '4'
