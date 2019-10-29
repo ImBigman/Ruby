@@ -12,7 +12,7 @@
 class Train
   attr_reader :current_speed, :carriages, :kind, :number, :route, :current_station
 
-  def initialize(number, kind, carriages)
+  def initialize(number, kind)
     @number = number
     @kind = kind
     @carriages = carriages
