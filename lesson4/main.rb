@@ -8,9 +8,9 @@ require_relative '../lesson4/passenger_carriage'
 
 class Main
   def initialize
-  @station_list = []
-  @route_list = []
-  @train_list = []
+    @station_list = []
+    @route_list = []
+    @train_list = []
   end
 
   def menu
@@ -28,30 +28,13 @@ class Main
     case main_menu
     when '1'
       create_station
-      p @station_list
-      p "Всего станций: #{@station_list.count}"
       menu
     when '2'
       create_train
-      p @train_list
-      p "Всего поездов: #{@train_list.count}"
       menu
     when '3'
-      p " 1 - 'Создать' 2 - 'Редактировать'"
-      @route_action = gets.chomp
-      case @route_action
-      when '1'
-        create_route
-        p @route_list
-        p "Всего маршрутов: #{@route_list.count}"
-        menu
-      when '2'
-        adjust_route
-        p @route_list
-        menu
-      else  menu
-      p 'назад в меню'
-      end
+      route_menu
+      menu
     when '4'
       train_add_route
       menu
@@ -68,7 +51,7 @@ class Main
       station_explorer
       menu
     when '9'
-      p  'До свидания :)'
+      puts  'До свидания.'
       exit(true)
     else
       exit
@@ -82,6 +65,8 @@ class Main
     name = gets.chomp
     @station_list.push(Station.new(name))
     puts "Вы создали станцию:  #{name} "
+    p @station_list
+    p "Всего станций: #{@station_list.count}"
   end
 
   def create_train
@@ -96,6 +81,21 @@ class Main
             end
     @train_list.push(train)
     puts "Вы создали #{train.kind} поезд: #{train.number} "
+    p @train_list
+    p "Всего поездов: #{@train_list.count}"
+  end
+
+  def route_menu
+    p " 1 - 'Создать' 2 - 'Редактировать' "
+    route_action = gets.chomp
+    case route_action
+    when '1'
+      create_route
+    when '2'
+      adjust_route
+    else menu
+    end
+    menu
   end
 
   def create_route
@@ -109,6 +109,8 @@ class Main
     route = Route.new(first_station, end_station)
     puts "Вы создали маршрут #{route.full_route}"
     @route_list.push(route)
+    p @route_list
+    p "Всего маршрутов: #{@route_list.count}"
   end
 
   def adjust_route
@@ -116,7 +118,7 @@ class Main
     p @route_list
     route_number = gets.chomp.to_i
     route = @route_list[route_number - 1]
-    puts "Если хотите управлять маршрутом:
+    puts "Управление маршрутом:
        1 'Добавить станцию в маршрут'
        2 'Удалить станцию из маршрута'
        3 'Пропустить'"
@@ -129,6 +131,7 @@ class Main
       station = @station_list[station_in_list - 1]
       route.route_station_add(station)
       puts "Вы добавили #{station.name} к маршруту.  #{route.full_route}"
+      p @route_list
     when '2'
       p route.full_route
       puts 'Выберите станцию, которую нужно удалить из маршрута: '
@@ -136,6 +139,7 @@ class Main
       station = route.full_route[station_in_route - 1]
       route.route_station_remove(station)
       puts "Вы удалили #{station.name} из маршрута.  #{route.full_route}"
+      p @route_list
     else puts 'выход'
     end
   end
