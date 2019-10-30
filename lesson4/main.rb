@@ -93,7 +93,7 @@ class Main
       create_route
     when '2'
       adjust_route
-    else menu
+    else p 'Назад в меню'
     end
     menu
   end
