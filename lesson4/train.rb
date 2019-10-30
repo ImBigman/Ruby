@@ -21,8 +21,6 @@ class Train
     @kind = kind
     @carriages_pull = []
     @current_speed = 0
-    @route = []
-    @current_station = []
   end
 
   def carriages_add(carriage)

@@ -1,7 +1,6 @@
 require_relative '../lesson4/carriage'
-class CargoCarriage < Carriage
-  attr_reader :name, :kind
 
+class CargoCarriage < Carriage
   def initialize(name, kind = 'Грузовой')
     super
   end
