@@ -7,3 +7,5 @@ _linux
 *.yml
 .idea
 *.txt
+test.rb
+*.icls
