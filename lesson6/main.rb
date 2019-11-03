@@ -167,14 +167,14 @@ class Main
     train_in_list = gets.chomp.to_i
     train = @train_list[train_in_list - 1]
     train.stop
-    p 'Укажите номер вагона'
+    p 'Укажите номер вагона (русскими буквами с заглавной): '
     carriage_name = gets.chomp
     new_carriage = if train.kind == 'Грузовой'
                      CargoCarriage.new(carriage_name)
                    else
                      PassengerCarriage.new(carriage_name)
                    end
-    a.carriages_add(new_carriage)
+    train.carriages_add(new_carriage)
     p "Вы добавили вагон  #{new_carriage.name} к поезду  #{train.number}"
     p 'Всего вагонов: ' "#{train.carriages_count}"  '  список  ' " #{train.carriages_pull}"
   end

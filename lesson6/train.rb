@@ -31,9 +31,7 @@ class Train
   end
 
   def validate!
-    raise ArgumentError if number.nil?
     raise ArgumentError if number !~ NUMBER_FORMAT
-    raise ArgumentError if kind.nil?
     raise ArgumentError if kind !~ KIND_FORMAT
   end
 
@@ -111,7 +109,7 @@ class Train
   def valid?
     validate!
     true
-  rescue StandardError
+  rescue ArgumentError
     false
   end
 end

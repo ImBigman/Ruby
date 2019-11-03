@@ -20,7 +20,6 @@ class Station
   end
 
   def validate!
-    raise ArgumentError if name.nil?
     raise ArgumentError if name.length < 3
     raise ArgumentError if name !~ NAME_FORMAT
   end
@@ -54,7 +53,7 @@ class Station
   def valid?
     validate!
     true
-  rescue StandardError
+  rescue ArgumentError
     false
   end
 end
