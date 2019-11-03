@@ -19,7 +19,7 @@ class Station
     @@all_stations
   end
 
-  def validate_name
+  def validate!
     raise ArgumentError if name.nil?
     raise ArgumentError if name.length < 3
     raise ArgumentError if name !~ NAME_FORMAT
@@ -28,9 +28,9 @@ class Station
   def initialize(name)
     @name = name
     @station_pull = []
+    validate!
     @@all_stations << self
     register_instance
-    validate_name
   end
 
   def send_train(train)
@@ -52,7 +52,7 @@ class Station
   end
 
   def valid?
-    validate_name
+    validate!
     true
   rescue StandardError
     false

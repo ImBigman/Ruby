@@ -13,13 +13,14 @@
 # Определить, какие методы могут быть помещены в private/protected и вынести их в такую секцию. (пока все методы публичны)
 require_relative 'instance_counter'
 require_relative 'company_name'
-require_relative 'validate'
+
 
 class Train
   include CompanyName
   include InstanceCounter
-  include Validator
 
+  KIND_FORMAT = /^[Г, П]{1}+.+[й]{1}$/.freeze
+  NUMBER_FORMAT = /^\w{3}[_]*{1}\w{2}$/.freeze
 
   attr_reader :current_speed, :kind, :number, :route, :current_station, :carriages_pull
 
@@ -29,14 +30,21 @@ class Train
     @@all_trains[number]
   end
 
+  def validate!
+    raise ArgumentError if number.nil?
+    raise ArgumentError if number !~ NUMBER_FORMAT
+    raise ArgumentError if kind.nil?
+    raise ArgumentError if kind !~ KIND_FORMAT
+  end
+
   def initialize(number, kind)
     @number = number
     @kind = kind
     @carriages_pull = []
     @current_speed = 0
-    @@all_trains[number] = self
+    validate!
     register_instance
-    validate_number
+    @@all_trains[number] = self
   end
 
   def carriages_add(carriage)
@@ -98,6 +106,13 @@ class Train
     @current_station.send_train(self)
     @current_station = @route.full_route[@route.full_route.index(@current_station) + 1]
     @current_station.receive_train(self)
+  end
+
+  def valid?
+    validate!
+    true
+  rescue StandardError
+    false
   end
 end
 

@@ -30,13 +30,7 @@ class Main
       create_station
       menu
     when '2'
-      begin
       create_train
-      rescue ArgumentError => e
-        p "Ошибка c:  #{e.message}"
-        p 'Вы ввели не верный формат номера! Попробуйте еще раз.'
-        retry
-      end
       menu
     when '3'
       route_menu
@@ -81,14 +75,18 @@ class Main
     puts "Выберите тип поезда: 1 'Грузовой' 2 'Пассажирский'"
     kind = gets.chomp.to_i
     train = if kind == 1
-            CargoTrain.new(number)
+              CargoTrain.new(number)
             else
-            PassengerTrain.new(number)
+              PassengerTrain.new(number)
             end
     @train_list.push(train)
     puts "Вы создали #{train.kind} поезд: #{train.number} "
     p @train_list
     p "Всего поездов: #{@train_list.count}"
+  rescue ArgumentError => e
+    p "Ошибка c:  #{e.message}"
+    p 'Вы ввели не верный формат номера! Попробуйте еще раз.'
+    retry
   end
 
   def route_menu
