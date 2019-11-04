@@ -6,10 +6,8 @@ class Carriage
   NAME_FORMAT = /^[А-Я]{1}+.*/.freeze
 
   def validate!
-    kinds = %w[Грузовой Пассажирский]
-
     raise ArgumentError if name !~ NAME_FORMAT
-    raise ArgumentError if kinds.include?(kind) == false
+    raise ArgumentError unless Train::TYPES.include?(kind)
   end
 
   def initialize(name, kind)

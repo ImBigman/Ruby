@@ -21,6 +21,7 @@ class Train
 
   KIND_FORMAT = /^[Г, П]{1}+.+[й]{1}$/.freeze
   NUMBER_FORMAT = /^\w{3}[_]*{1}\w{2}$/.freeze
+  TYPES = %w[Грузовой Пассажирский].freeze
 
   attr_reader :current_speed, :kind, :number, :route, :current_station, :carriages_pull
 
