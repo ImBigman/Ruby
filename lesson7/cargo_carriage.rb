@@ -6,7 +6,7 @@ class CargoCarriage < Carriage
   def initialize(name, kind = 'Грузовой', pull)
     super
     @taken_volume = 0
-    @volume = @pull
+    @volume = pull
   end
 
   def engage_volume

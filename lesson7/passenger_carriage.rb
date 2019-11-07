@@ -6,7 +6,7 @@ class PassengerCarriage < Carriage
   def initialize(name, kind = 'Пассажирский', pull)
     super
     @taken_place = 0
-    @places = @pull
+    @places = pull
   end
 
   def engage_place

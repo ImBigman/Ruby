@@ -170,7 +170,7 @@ class Main
     route_number = gets.chomp.to_i
     route = @route_list[route_number - 1]
     train.add_route(route)
-    p "Поезд #{train.number} принял маршрут  #{train.route.each { |station| p station.name }}"
+    p "Поезд #{train.number} принял маршрут  #{train.route}"
   end
 
   def tack_carriage
