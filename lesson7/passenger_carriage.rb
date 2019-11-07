@@ -6,13 +6,14 @@ class PassengerCarriage < Carriage
   def initialize(name, kind = 'Пассажирский', pull)
     super
     @taken_place = 0
-    @places = pull
+    @places = 0
+    @pull = pull
   end
 
   def engage_place
-    return unless @places.positive?
+    return unless @taken_place != @pull
 
     @taken_place += 1
-    @places -= 1
+    @places = @pull - @taken_volume
   end
 end

@@ -110,4 +110,3 @@ class Train
     false
   end
 end
-
