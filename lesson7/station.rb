@@ -1,9 +1,3 @@
-# Класс Station (Станция):
-# Имеет название, которое указывается при ее создании
-# Может принимать поезда (по одному за раз)
-# Может возвращать список всех поездов на станции, находящиеся в текущий момент
-# Может возвращать список поездов на станции по типу (см. ниже): кол-во грузовых, пассажирских
-# Может отправлять поезда (по одному за раз, при этом, поезд удаляется из списка поездов, находящихся на станции).
 require_relative 'instance_counter'
 
 class Station
@@ -42,15 +36,16 @@ class Station
     @station_pull << train
   end
 
-  def station_trains(&block)
-    @station_pull.each.with_index(1) { |train, index| yield(train, index) }
+  def each_train(&block)
+    if block_given?
+      @station_pull.each_with_index { |train, index| yield(train, index) }
+    else false
+    end
   end
 
   def station_pull_kind
     station_pull_kind = []
-    @station_pull.each do |train, _|
-      station_pull_kind << { train.kind => train.number }
-    end
+    @station_pull.each { |train, _| station_pull_kind << { train.kind => train.number } }
     station_pull_kind.inject { |memo, el| memo.merge(el) { |_, old_v, new_v| [old_v + ', ' + new_v] } }
   end
 

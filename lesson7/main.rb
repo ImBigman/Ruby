@@ -123,6 +123,10 @@ class Main
     @route_list.push(route)
     p @route_list
     p "Всего маршрутов: #{@route_list.count}"
+  rescue StandardError => e
+    p "Ошибка c:  #{e.message}"
+    p 'Станции должны быть разными! Попробуйте еще раз.'
+    retry
   end
 
   def adjust_route
@@ -145,7 +149,7 @@ class Main
       puts "Вы добавили #{station.name} к маршруту.  #{route.full_route}"
       @route_list.each.with_index(1) { |route, index| puts " #{index} -- #{route.full_route}" }
     when '2'
-      p route.full_route
+      p route.full_route.each.with_index(1) { |station, index| puts "#{index} - #{station.name}" }
       puts 'Выберите станцию, которую нужно удалить из маршрута: '
       station_in_route = gets.chomp.to_i
       station = route.full_route[station_in_route - 1]
@@ -166,7 +170,7 @@ class Main
     route_number = gets.chomp.to_i
     route = @route_list[route_number - 1]
     train.add_route(route)
-    p train
+    p "Поезд #{train.number} принял маршрут  #{train.route.each { |station| p station.name }}"
   end
 
   def tack_carriage
@@ -216,11 +220,11 @@ class Main
     if train.kind == 'Грузовой'
       carriage.engage_volume
       puts "Занятого объема в вагоне: #{carriage.taken_volume}"
-      puts "Оставшийся свободный обьем в вагоне: #{carriage.free_volume}"
+      puts "Оставшийся свободный обьем в вагоне: #{carriage.volume}"
     else
       carriage.engage_place
       puts "Занятых мест в вагоне: #{carriage.taken_place} "
-      puts "Оставшихся свободных мест в вагоне: #{carriage.free_places} "
+      puts "Оставшихся свободных мест в вагоне: #{carriage.places} "
     end
   end
 
@@ -250,7 +254,7 @@ class Main
     puts "Вы выбрали станцию: #{station.name}"
     p "Список поездов на станции: #{station.station_pull_kind}"
     p "Всего поездов на станции: #{station.station_pull.count}"
-    station.station_trains { |train, index| puts "#{index} -  #{train.kind} поезд #{train.number} с вагонами в количестве: #{train.carriages_pull.count}" }
+    station.each_train { |train, index| puts "#{index + 1} -  #{train.kind} поезд #{train.number} с вагонами в количестве: #{train.carriages_pull.count}" }
   end
 
   def train_explorer
@@ -262,11 +266,11 @@ class Main
     p 'Список вагонов поезда: '
     train.carriages_pull.each.with_index(1) { |carriage, index| puts "#{index} - #{carriage.name}" }
     p "Всего вагонов у поезда: #{train.carriages_pull.count}"
-    train.trains_carriages do |carriage, index|
+    train.each_carriage do |carriage, index|
       if carriage.kind == 'Грузовой'
-        puts "#{index} -  #{carriage.kind} вагон #{carriage.name} вместимостью: #{carriage.pull} (занятый объем: #{carriage.taken_volume}/ свободные объем: #{carriage.free_volume})"
+        puts "#{index + 1} -  #{carriage.kind} вагон #{carriage.name} вместимостью: #{carriage.pull} (занятый объем: #{carriage.taken_volume}/ свободные объем: #{carriage.volume})"
       else
-        puts "#{index} -  #{carriage.kind} вагон #{carriage.name} вместимостью: #{carriage.pull} (занятых мест: #{carriage.taken_place}/ свободных мест: #{carriage.free_places})"
+        puts "#{index + 1} -  #{carriage.kind} вагон #{carriage.name} вместимостью: #{carriage.pull} (занятых мест: #{carriage.taken_place}/ свободных мест: #{carriage.places})"
       end
     end
   end

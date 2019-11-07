@@ -6,19 +6,13 @@ class PassengerCarriage < Carriage
   def initialize(name, kind = 'Пассажирский', pull)
     super
     @taken_place = 0
-    @all_places = []
-    @places = @all_places.concat(Array.new(pull, 'free_place'))
+    @places = @pull
   end
 
   def engage_place
-    return unless @places.include?('free_place')
+    return unless @places.positive?
 
     @taken_place += 1
-    @places << 'taken_place'
-    @places.delete_at(0)
-  end
-
-  def free_places
-    @all_places.count('free_place')
+    @places -= 1
   end
 end

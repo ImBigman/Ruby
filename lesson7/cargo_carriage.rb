@@ -6,20 +6,13 @@ class CargoCarriage < Carriage
   def initialize(name, kind = 'Грузовой', pull)
     super
     @taken_volume = 0
-    @all_volume = []
-    @volume = @all_volume.concat(Array.new(pull, 'free_volume'))
+    @volume = @pull
   end
 
   def engage_volume
-    return unless @volume.include?('free_volume')
+    return unless @volume.positive?
 
     @taken_volume += 1
-    @volume << 'taken_volume'
-    @volume.delete_at(0)
-    @volume
-  end
-
-  def free_volume
-    @all_volume.count('free_volume')
+    @volume -= 1
   end
 end

@@ -1,16 +1,3 @@
-# Класс Train (Поезд):
-# Имеет номер (произвольная строка) и тип (грузовой, пассажирский) и количество вагонов, эти данные указываются при создании экземпляра класса
-# Может набирать скорость
-# Может возвращать текущую скорость
-# Может тормозить (сбрасывать скорость до нуля)
-# Может возвращать количество вагонов
-# Может прицеплять/отцеплять вагоны (по одному вагону за операцию, метод просто увеличивает или уменьшает количество вагонов). Прицепка/отцепка вагонов может осуществляться только если поезд не движется.
-# Может принимать маршрут следования (объект класса Route).
-# При назначении маршрута поезду, поезд автоматически помещается на первую станцию в маршруте.
-# Может перемещаться между станциями, указанными в маршруте. Перемещение возможно вперед и назад, но только на 1 станцию за раз.
-# Возвращать предыдущую станцию, текущую, следующую, на основе маршрута
-# ---
-# Определить, какие методы могут быть помещены в private/protected и вынести их в такую секцию. (пока все методы публичны)
 require_relative 'instance_counter'
 require_relative 'company_name'
 
@@ -103,14 +90,17 @@ class Train
 
   def forward_on_route
     return unless @current_station != @route.full_route.last
-station
+
     @current_station.send_train(self)
     @current_station = @route.full_route[@route.full_route.index(@current_station) + 1]
     @current_station.receive_train(self)
   end
 
-  def trains_carriages(&block)
-    @carriages_pull.each.with_index(1) { |carriage, index| yield(carriage, index) }
+  def each_carriage(&block)
+    if block_given?
+      @carriages_pull.each_with_index { |carriage, index| yield(carriage, index) }
+    else false
+    end
   end
 
   def valid?
