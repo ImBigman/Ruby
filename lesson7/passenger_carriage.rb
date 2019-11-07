@@ -14,6 +14,6 @@ class PassengerCarriage < Carriage
     return unless @taken_place != @pull
 
     @taken_place += 1
-    @places = @pull - @taken_volume
+    @places = @pull - @taken_place
   end
 end
