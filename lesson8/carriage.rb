@@ -12,7 +12,7 @@ class Carriage
     raise ArgumentError unless Train::TYPES.include?(kind)
   end
 
-  def initialize(name, kind, pull)
+  def initialize(name, pull, kind)
     @name = name.to_s
     @kind = kind.to_s
     validate!
