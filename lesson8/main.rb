@@ -13,9 +13,9 @@ class Main
     @train_list = []
   end
 
-# rubocop: disable Metrics/CyclomaticComplexity
-# rubocop: disable Metrics/MethodLength
-# rubocop: disable Metrics/AbcSize
+  # rubocop: disable Metrics/CyclomaticComplexity
+  # rubocop: disable Metrics/MethodLength
+  # rubocop: disable Metrics/AbcSize
   def menu
     puts 'Для того чтобы выполнить операцию укажите номер одного из пунктов: '
     puts '1 - Создать станцию'
@@ -68,9 +68,10 @@ class Main
       exit
     end
   end
-# rubocop: enable Metrics/MethodLength
-# rubocop: enable Metrics/AbcSize
-# rubocop: enable Metrics/CyclomaticComplexity
+  # rubocop: enable Metrics/MethodLength
+  # rubocop: enable Metrics/AbcSize
+  # rubocop: enable Metrics/CyclomaticComplexity
+
   protected
 
   def create_station
@@ -110,8 +111,8 @@ class Main
     @train = @train_list[train_in_list - 1]
   end
 
-# rubocop: disable Metrics/MethodLength
-# rubocop: disable Metrics/AbcSize
+  # rubocop: disable Metrics/MethodLength
+  # rubocop: disable Metrics/AbcSize
   def create_train
     puts 'Введите номер поезда (3 буквы/цифры в любом порядке, необязательный дефис и еще 2 буквы/цифры): '
     number = gets.chomp
@@ -277,8 +278,8 @@ class Main
       end
     end
   end
-# rubocop: enable Metrics/MethodLength
-# rubocop: enable Metrics/AbcSize
+  # rubocop: enable Metrics/MethodLength
+  # rubocop: enable Metrics/AbcSize
 end
 # rubocop: enable Metrics/ClassLength
 ui = Main.new
