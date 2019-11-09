@@ -211,8 +211,8 @@ class Main
     @train.carriages_add(new_carriage)
     p "Добавлен вагон #{new_carriage.name} к поезду  #{@train.number} всего: #{@train.carriages_count}"
     p "Список: #{@train.carriages_pull.each.with_index(1) do |carriage, index|
-       puts "#{index} - #{carriage.name} : #{carriage.kind} вместимость #{carriage.pull}"
-                                                          end
+    puts "#{index} - #{carriage.name} : #{carriage.kind} вместимость #{carriage.pull}"
+  end
                }"
   end
 

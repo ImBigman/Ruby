@@ -3,7 +3,7 @@ require_relative '../lesson8/carriage'
 class CargoCarriage < Carriage
   attr_reader :volume, :taken_volume
 
-  def initialize(name,pull , kind = 'Грузовой')
+  def initialize(name, pull, kind = 'Грузовой')
     super
     @taken_volume = 0
     @pull = pull
