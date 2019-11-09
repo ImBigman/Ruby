@@ -1,10 +1,10 @@
-require_relative '../lesson8/cargo_train'
-require_relative '../lesson8/passenger_train'
-require_relative '../lesson8/route'
-require_relative '../lesson8/station'
-require_relative '../lesson8/train'
-require_relative '../lesson8/cargo_carriage'
-require_relative '../lesson8/passenger_carriage'
+require_relative '../lesson7/cargo_train'
+require_relative '../lesson7/passenger_train'
+require_relative '../lesson7/route'
+require_relative '../lesson7/station'
+require_relative '../lesson7/train'
+require_relative '../lesson7/cargo_carriage'
+require_relative '../lesson7/passenger_carriage'
 # rubocop: disable Metrics/ClassLength
 class Main
   def initialize

@@ -1,4 +1,4 @@
-require_relative '../lesson8/carriage'
+require_relative '../lesson7/carriage'
 
 class PassengerCarriage < Carriage
   attr_reader :places, :taken_place

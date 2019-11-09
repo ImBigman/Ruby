@@ -1,4 +1,4 @@
-require_relative '../lesson8/train'
+require_relative '../lesson7/train'
 
 class PassengerTrain < Train
   def initialize(number, kind = 'Пассажирский')
