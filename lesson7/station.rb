@@ -3,15 +3,9 @@ require_relative 'instance_counter'
 class Station
   include InstanceCounter
 
-  NAME_FORMAT = /^[А-Я]{1}+.*/.freeze
+  NAME_FORMAT = /^[А-Я]+.*/.freeze
 
   attr_reader :station_pull, :name, :block
-
-  @@all_stations = []
-
-  def self.all
-    @@all_stations
-  end
 
   def validate!
     raise ArgumentError if name.length < 3
@@ -22,7 +16,6 @@ class Station
     @name = name
     @station_pull = []
     validate!
-    @@all_stations << self
     register_instance
   end
 
@@ -36,7 +29,7 @@ class Station
     @station_pull << train
   end
 
-  def each_train(&block)
+  def each_train(&_block)
     if block_given?
       @station_pull.each_with_index { |train, index| yield(train, index) }
     else false

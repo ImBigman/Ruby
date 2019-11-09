@@ -1,22 +1,15 @@
 require_relative 'instance_counter'
 require_relative 'company_name'
 
-
 class Train
   include CompanyName
   include InstanceCounter
 
-  KIND_FORMAT = /^[Г, П]{1}+.+[й]{1}$/.freeze
-  NUMBER_FORMAT = /^\w{3}[_]*{1}\w{2}$/.freeze
+  KIND_FORMAT = /^[Г, П]+.+[й]/.freeze
+  NUMBER_FORMAT = /^\w{3}[_]*\w{2}$/.freeze
   TYPES = %w[Грузовой Пассажирский].freeze
 
   attr_reader :current_speed, :kind, :number, :route, :current_station, :carriages_pull
-
-  @@all_trains = {}
-
-  def self.find(number)
-    @@all_trains[number]
-  end
 
   def validate!
     raise ArgumentError if number !~ NUMBER_FORMAT
@@ -30,7 +23,6 @@ class Train
     @current_speed = 0
     validate!
     register_instance
-    @@all_trains[number] = self
   end
 
   def carriages_add(carriage)
@@ -61,7 +53,6 @@ class Train
 
   def add_route(route)
     @route = route
-    @current_station.send_train(self)
     @current_station = @route.full_route.first
     @current_station.receive_train(self)
   end
@@ -69,8 +60,7 @@ class Train
   def next_station
     return unless @current_station != @route.full_route.last
 
-    next_station = @route.full_route[@route.full_route.index(@current_station) + 1]
-    next_station
+    @route.full_route[@route.full_route.index(@current_station) + 1]
   end
 
   def previous_station
@@ -96,7 +86,7 @@ class Train
     @current_station.receive_train(self)
   end
 
-  def each_carriage(&block)
+  def each_carriage(&_block)
     if block_given?
       @carriages_pull.each_with_index { |carriage, index| yield(carriage, index) }
     else false

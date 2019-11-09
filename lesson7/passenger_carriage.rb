@@ -1,9 +1,9 @@
-require_relative '../lesson7/carriage'
+require_relative '../lesson8/carriage'
 
 class PassengerCarriage < Carriage
   attr_reader :places, :taken_place
 
-  def initialize(name, kind = 'Пассажирский', pull)
+  def initialize(name, pull, kind = 'Пассажирский')
     super
     @taken_place = 0
     @places = 0
