@@ -12,6 +12,8 @@ class Test2
   include Validation
   attr_reader :name, :attr_hash
 
+  validate :name, :presence
+  validate :name, :format, /A-Z/
   validate :name, :type, String
 
   def initialize(name, number)
@@ -34,5 +36,4 @@ p test1.a = 6
 p test1.a = 7
 p test1.a
 p test1.a_history
-p test1.d = 5
-p test1.d = 'string'
+

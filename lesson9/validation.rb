@@ -5,19 +5,27 @@ module Validation
   end
 
   module ClassMethods
+    attr_accessor :validators
+
+    def all_validators(name, type, attribute)
+      @validators ||= []
+      @validators << { name: name,
+                       validation_type: type,
+                       attributes: attribute }
+    end
+
     def validate(attr, *args)
-      @value = instance_variable_get("@#{attr}".to_sym)
-      @name = "@#{attr}".to_sym
-      @attr_hash = {}
-      @attr_hash[@name] = *args
+      name = "@#{attr}".to_sym
+      type = args[0].to_s.sub(':', '')
+      attribute = args[1]
+      all_validators(name, type, attribute)
     end
   end
 
   module InstanceMethods
-
     def validate!
-      self.class.instance_variable_get(:@attr_hash).each do |key, value|
-        send "validate_#{value.first.to_s.sub(':', '')}", key, value.last
+      self.class.instance_variable_get(:@validators).each do |elem|
+        send "validate_#{elem[:validation_type]}", elem[:name], elem[:attributes]
       end
     end
 
@@ -25,15 +33,19 @@ module Validation
       var = instance_variable_get(value)
       return unless var == '' || var.nil?
 
-      raise StandardError, 'Argument is empty!'
+      raise StandardError, 'Validate_presence: Argument is empty!'
     end
 
     def validate_format(value, args)
-      raise StandardError, 'Wrong format of argument!' if instance_variable_get(value) !~ args
+      return unless instance_variable_get(value) !~ args
+
+      raise StandardError, 'Validate_format: Wrong format of argument!'
     end
 
     def validate_type(value, args)
-      raise StandardError, 'Different types!' unless instance_variable_get(value).instance_of? args
+      return if instance_variable_get(value).instance_of? args
+
+      raise StandardError, 'Validate_type: Different types!'
     end
 
     def validate?
