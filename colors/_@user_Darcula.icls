@@ -3,7 +3,7 @@
     <property name="created">2019-10-30T19:41:39</property>
     <property name="ide">Ruby</property>
     <property name="ideVersion">2019.2.3.0.0</property>
-    <property name="modified">2019-11-20T08:27:13</property>
+    <property name="modified">2019-11-29T12:22:37</property>
     <property name="originalScheme">Darcula</property>
   </metaInfo>
   <colors>
@@ -15,6 +15,7 @@
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_BOTH_CONFLICTS" value="fc9867" />
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_CONFLICTS" value="fc9867" />
     <option name="FILESTATUS_IDEA_FILESTATUS_MERGED_WITH_PROPERTY_CONFLICTS" value="fc9867" />
+    <option name="FILESTATUS_IGNORE.PROJECT_VIEW.IGNORED" value="ab7967" />
     <option name="FILESTATUS_MERGED" value="c792ea" />
     <option name="FILESTATUS_MODIFIED" value="80cbc4" />
     <option name="FILESTATUS_NOT_CHANGED_IMMEDIATE" value="80cbc4" />
